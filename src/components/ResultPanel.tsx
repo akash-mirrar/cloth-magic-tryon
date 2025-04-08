@@ -17,17 +17,17 @@ const ResultPanel: React.FC<ResultPanelProps> = ({
   return (
     <div 
       className={cn(
-        "flex flex-col items-center justify-center h-[350px] bg-white rounded-xl border border-gray-300 relative overflow-hidden",
+        "flex flex-col items-center justify-center h-[350px] rounded-xl border border-violet-200 relative overflow-hidden",
         className
       )}
     >
       {isProcessing ? (
         <div className="flex flex-col items-center">
           <div className="relative w-16 h-16">
-            <div className="absolute inset-0 rounded-full border-2 border-gray-200 border-t-transparent animate-spin"></div>
-            <div className="absolute inset-2 rounded-full border-2 border-gray-300 border-t-transparent animate-spin animation-delay-500"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-violet-200 border-t-transparent animate-spin"></div>
+            <div className="absolute inset-2 rounded-full border-2 border-violet-300 border-t-transparent animate-spin animation-delay-500"></div>
           </div>
-          <p className="mt-4 text-gray-600 font-medium">Processing...</p>
+          <p className="mt-4 text-violet-700 font-medium">Processing...</p>
         </div>
       ) : outputImage ? (
         <img
@@ -37,8 +37,8 @@ const ResultPanel: React.FC<ResultPanelProps> = ({
         />
       ) : (
         <div className="text-center p-6">
-          <h3 className="text-lg font-medium text-gray-700">Result Preview</h3>
-          <p className="mt-2 text-sm text-gray-500">
+          <h3 className="text-lg font-medium text-violet-700">Result Preview</h3>
+          <p className="mt-2 text-sm text-violet-500">
             Click on "Try Now" to see the magic
           </p>
         </div>

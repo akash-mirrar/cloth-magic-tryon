@@ -21,7 +21,7 @@ const UploadBox: React.FC<UploadBoxProps> = ({
   return (
     <div 
       className={cn(
-        "relative flex flex-col items-center justify-center h-[350px] bg-white rounded-xl border border-dashed border-gray-300 cursor-pointer overflow-hidden transition-all duration-300 hover:border-gray-400 hover:shadow-md",
+        "relative flex flex-col items-center justify-center h-[350px] rounded-xl border border-dashed cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-md hover:border-violet-400",
         className
       )}
       onClick={onUploadClick}
@@ -30,7 +30,7 @@ const UploadBox: React.FC<UploadBoxProps> = ({
         <>
           <button
             type="button"
-            className="absolute top-2 right-2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full text-gray-500 hover:text-gray-800 hover:bg-white transition-colors"
+            className="absolute top-2 right-2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full text-violet-500 hover:text-violet-800 hover:bg-white transition-colors"
             onClick={(e) => {
               e.stopPropagation();
               onClearImage();
@@ -46,11 +46,11 @@ const UploadBox: React.FC<UploadBoxProps> = ({
         </>
       ) : (
         <div className="flex flex-col items-center justify-center p-6 text-center">
-          <div className="p-4 rounded-full bg-gray-50">
-            <UploadCloud className="h-8 w-8 text-gray-400" />
+          <div className="p-4 rounded-full bg-violet-100/60">
+            <UploadCloud className="h-8 w-8 text-violet-500" />
           </div>
-          <h3 className="mt-4 text-lg font-medium text-gray-700">{title}</h3>
-          <p className="mt-2 text-sm text-gray-500">
+          <h3 className="mt-4 text-lg font-medium text-violet-700">{title}</h3>
+          <p className="mt-2 text-sm text-violet-500">
             PNG, JPG or JPEG (max 10MB)
           </p>
         </div>
