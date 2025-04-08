@@ -21,26 +21,26 @@ const Index = () => {
   const clothRef = useRef<HTMLInputElement>(null);
 
   const modelImages = [
-    "public/images/37a7fb957d4ea23233ab8f43536c7c297b5833c6.png",
-    "public/images/372c6039cbc519cf6fb8cc37b56bac4f5f849edb.png",
-    "public/images/03471026520-015-p.jpg"
+    "images/37a7fb957d4ea23233ab8f43536c7c297b5833c6.png",
+    "images/372c6039cbc519cf6fb8cc37b56bac4f5f849edb.png",
+    "images/03471026520-015-p.jpg"
   ];
 
   const garmentImagesByCategory = {
     tops: [
-      "public/images/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
-      "public/images/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
-      "public/images/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
+      "images/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
+      "images/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
+      "images/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
     ],
     bottoms: [
-      "public/images/08062305406-e1.jpg",
-      "public/images/09794304400-e1.jpg",
-      "public/images/09794317400-e1.png"
+      "images/08062305406-e1.jpg",
+      "images/09794304400-e1.jpg",
+      "images/09794317400-e1.png"
     ],
     "one-pieces": [
-      "public/images/02840709605-e1.jpg",
-      "public/images/02976241080-e1.jpg",
-      "public/images/03079649942-e1.jpg"
+      "images/02840709605-e1.jpg",
+      "images/02976241080-e1.jpg",
+      "images/03079649942-e1.jpg"
     ]
   };
 
