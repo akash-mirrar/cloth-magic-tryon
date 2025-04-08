@@ -1,8 +1,9 @@
 
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
-import { Upload, UploadCloud, Trash2, Download } from "lucide-react";
+import { Upload, UploadCloud, Trash2, Download, Shirt, Pants, Dress } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TryOnService from "@/services/TryOnService";
 import UploadBox from "@/components/UploadBox";
 import ImageGallery from "@/components/ImageGallery";
@@ -14,7 +15,7 @@ const Index = () => {
   const [clothImage, setClothImage] = useState("");
   const [outputImage, setOutputImage] = useState("");
   const [outputImageBlob, setOutputImageBlob] = useState<Blob | null>(null);
-  const [bodyType, setBodyType] = useState("upper_body");
+  const [category, setCategory] = useState<"tops" | "bottoms" | "one-pieces">("tops");
   const [isProcessing, setIsProcessing] = useState(false);
   
   const imageRef = useRef<HTMLInputElement>(null);
@@ -27,11 +28,27 @@ const Index = () => {
     "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a528918fdc85c9049ae9099d8cde0697.png"
   ];
 
-  const garmentImages = [
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
-  ];
+  // Category-specific garment images
+  const garmentImagesByCategory = {
+    tops: [
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
+    ],
+    bottoms: [
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/08062305406-e1.jpg",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/09794304400-e1.jpg",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/09794317400-e1.png"
+    ],
+    "one-pieces": [
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/02840709605-e1.jpg",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/02976241080-e1.jpg",
+      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/03079649942-e1.jpg"
+    ]
+  };
+
+  // Get current garment images based on selected category
+  const currentGarmentImages = garmentImagesByCategory[category];
 
   const handleTryOn = async () => {
     if (!image || !clothImage) {
@@ -42,7 +59,7 @@ const Index = () => {
     setIsProcessing(true);
     
     try {
-      const result = await TryOnService.processTryOn(image, clothImage, bodyType);
+      const result = await TryOnService.processTryOn(image, clothImage, category);
       
       if (result.outputUrl && result.outputBlob) {
         setOutputImage(result.outputUrl);
@@ -78,6 +95,11 @@ const Index = () => {
     }
   };
 
+  const handleCategoryChange = (newCategory: "tops" | "bottoms" | "one-pieces") => {
+    setCategory(newCategory);
+    setClothImage(""); // Clear selected garment image when changing categories
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-purple-50 overflow-hidden">
       {/* Hidden file inputs */}
@@ -111,6 +133,26 @@ const Index = () => {
 
       {/* Main content */}
       <div className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+        {/* Category Selector */}
+        <div className="mb-6">
+          <Tabs defaultValue="tops" value={category} onValueChange={(value) => handleCategoryChange(value as "tops" | "bottoms" | "one-pieces")} className="w-full">
+            <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto mb-2 bg-violet-100/50">
+              <TabsTrigger value="tops" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
+                <Shirt className="w-4 h-4" />
+                <span>Tops</span>
+              </TabsTrigger>
+              <TabsTrigger value="bottoms" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
+                <Pants className="w-4 h-4" />
+                <span>Bottoms</span>
+              </TabsTrigger>
+              <TabsTrigger value="one-pieces" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
+                <Dress className="w-4 h-4" />
+                <span>One-Pieces</span>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* Model Upload Panel */}
           <UploadBox 
@@ -148,10 +190,10 @@ const Index = () => {
             className="animate-fade-in"
           />
 
-          {/* Garment Gallery */}
+          {/* Garment Gallery - now showing images based on selected category */}
           <ImageGallery 
-            title="Sample Garments"
-            images={garmentImages} 
+            title={`Sample ${category.charAt(0).toUpperCase() + category.slice(1)}`}
+            images={currentGarmentImages} 
             onSelectImage={setClothImage}
             className="animate-fade-in [animation-delay:200ms]"
           />

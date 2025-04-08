@@ -11,7 +11,7 @@ class TryOnService {
   public static async processTryOn(
     modelImageUrl: string, 
     garmentImageUrl: string, 
-    bodyType: string
+    category: string
   ): Promise<{ outputUrl: string; outputBlob: Blob | null }> {
     try {
       // Convert URLs to File objects
@@ -28,8 +28,7 @@ class TryOnService {
       const formData = new FormData();
       formData.append("model_image", modelFile);
       formData.append("garment_image", garmentFile);
-      // Uncomment if API supports this parameter
-      // formData.append("outfit_type", bodyType);
+      formData.append("category", category);
       
       // Send request
       const response = await fetch(this.API_URL, {

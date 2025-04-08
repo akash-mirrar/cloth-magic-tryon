@@ -30,11 +30,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
             className="relative overflow-hidden rounded-lg bg-gray-50 cursor-pointer hover:opacity-90 transition-all duration-300 hover:shadow-md transform hover:scale-105"
             onClick={() => onSelectImage(src)}
           >
-            <img
-              src={src}
-              alt={`Sample ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
+            <div className="w-full h-full flex items-center justify-center">
+              <img
+                src={src}
+                alt={`Sample ${index + 1}`}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
           </div>
         ))}
       </div>
