@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
-import { Upload, UploadCloud, Trash2, Download, Shirt, Pants, Dress } from "lucide-react";
+import { Upload, UploadCloud, Trash2, Download, Shirt, ShoppingBag, Tshirt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TryOnService from "@/services/TryOnService";
@@ -142,11 +142,11 @@ const Index = () => {
                 <span>Tops</span>
               </TabsTrigger>
               <TabsTrigger value="bottoms" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
-                <Pants className="w-4 h-4" />
+                <ShoppingBag className="w-4 h-4" />
                 <span>Bottoms</span>
               </TabsTrigger>
               <TabsTrigger value="one-pieces" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
-                <Dress className="w-4 h-4" />
+                <Tshirt className="w-4 h-4" />
                 <span>One-Pieces</span>
               </TabsTrigger>
             </TabsList>
