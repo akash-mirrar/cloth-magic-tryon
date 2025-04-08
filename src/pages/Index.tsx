@@ -1,7 +1,6 @@
-
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
-import { Upload, UploadCloud, Trash2, Download, Shirt, ShoppingBag, PantsIcon } from "lucide-react";
+import { Upload, UploadCloud, Trash2, Download, Shirt, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TryOnService from "@/services/TryOnService";
@@ -21,14 +20,12 @@ const Index = () => {
   const imageRef = useRef<HTMLInputElement>(null);
   const clothRef = useRef<HTMLInputElement>(null);
 
-  // Sample images - updated with the provided URLs
   const modelImages = [
     "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/37a7fb957d4ea23233ab8f43536c7c297b5833c6.png",
     "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/372c6039cbc519cf6fb8cc37b56bac4f5f849edb.png",
     "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a528918fdc85c9049ae9099d8cde0697.png"
   ];
 
-  // Category-specific garment images
   const garmentImagesByCategory = {
     tops: [
       "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
@@ -47,7 +44,6 @@ const Index = () => {
     ]
   };
 
-  // Get current garment images based on selected category
   const currentGarmentImages = garmentImagesByCategory[category];
 
   const handleTryOn = async () => {
@@ -102,7 +98,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-purple-50 overflow-hidden">
-      {/* Hidden file inputs */}
       <input
         ref={imageRef}
         type="file"
@@ -125,15 +120,12 @@ const Index = () => {
         }}
       />
 
-      {/* Header */}
       <header className="w-full py-4 px-6 border-b border-violet-200 bg-white/70 backdrop-blur-sm flex items-center">
         <MirrarLogo className="h-8" />
         <h1 className="ml-4 text-2xl font-semibold text-violet-800 hidden sm:block">Cloth Magic Try-On</h1>
       </header>
 
-      {/* Main content */}
       <div className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
-        {/* Category Selector */}
         <div className="mb-6">
           <Tabs defaultValue="tops" value={category} onValueChange={(value) => handleCategoryChange(value as "tops" | "bottoms" | "one-pieces")} className="w-full">
             <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto mb-2 bg-violet-100/50">
@@ -146,7 +138,7 @@ const Index = () => {
                 <span>Bottoms</span>
               </TabsTrigger>
               <TabsTrigger value="one-pieces" className="flex items-center gap-2 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-800">
-                <PantsIcon className="w-4 h-4" />
+                <ShoppingBag className="w-4 h-4" />
                 <span>One-Pieces</span>
               </TabsTrigger>
             </TabsList>
@@ -154,7 +146,6 @@ const Index = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Model Upload Panel */}
           <UploadBox 
             title="Upload Model Image"
             image={image}
@@ -163,7 +154,6 @@ const Index = () => {
             className="bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 animate-fade-in"
           />
 
-          {/* Garment Upload Panel */}
           <UploadBox 
             title="Upload Garment Image"
             image={clothImage}
@@ -172,7 +162,6 @@ const Index = () => {
             className="bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 flex-1 animate-fade-in [animation-delay:200ms]"
           />
 
-          {/* Result Panel */}
           <ResultPanel 
             isProcessing={isProcessing}
             outputImage={outputImage}
@@ -180,9 +169,7 @@ const Index = () => {
           />
         </div>
 
-        {/* Gallery and Actions Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Model Gallery */}
           <ImageGallery 
             title="Sample Models"
             images={modelImages} 
@@ -190,7 +177,6 @@ const Index = () => {
             className="animate-fade-in"
           />
 
-          {/* Garment Gallery - now showing images based on selected category */}
           <ImageGallery 
             title={`Sample ${category.charAt(0).toUpperCase() + category.slice(1)}`}
             images={currentGarmentImages} 
@@ -198,7 +184,6 @@ const Index = () => {
             className="animate-fade-in [animation-delay:200ms]"
           />
 
-          {/* Action Buttons */}
           <div className="flex flex-col space-y-4 justify-center animate-fade-in [animation-delay:400ms]">
             <Button 
               onClick={outputImage ? handleReset : handleTryOn}
