@@ -16,31 +16,31 @@ const Index = () => {
   const [outputImageBlob, setOutputImageBlob] = useState<Blob | null>(null);
   const [category, setCategory] = useState<"tops" | "bottoms" | "one-pieces">("tops");
   const [isProcessing, setIsProcessing] = useState(false);
-  
+
   const imageRef = useRef<HTMLInputElement>(null);
   const clothRef = useRef<HTMLInputElement>(null);
 
   const modelImages = [
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/37a7fb957d4ea23233ab8f43536c7c297b5833c6.png",
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/372c6039cbc519cf6fb8cc37b56bac4f5f849edb.png",
-    "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a528918fdc85c9049ae9099d8cde0697.png"
+    "public/images/37a7fb957d4ea23233ab8f43536c7c297b5833c6.png",
+    "public/images/372c6039cbc519cf6fb8cc37b56bac4f5f849edb.png",
+    "public/images/03471026520-015-p.jpg"
   ];
 
   const garmentImagesByCategory = {
     tops: [
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
+      "public/images/87aa1e54d667dbf339aa9d68cfc514e562696281.png",
+      "public/images/6f059e4e4c5370d1647aad5b5b3b892e095fed63.png",
+      "public/images/a50a0b378eef44d712bba7607787ea72d8cc573e.png"
     ],
     bottoms: [
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/08062305406-e1.jpg",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/09794304400-e1.jpg",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/09794317400-e1.png"
+      "public/images/08062305406-e1.jpg",
+      "public/images/09794304400-e1.jpg",
+      "public/images/09794317400-e1.png"
     ],
     "one-pieces": [
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/02840709605-e1.jpg",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/02976241080-e1.jpg",
-      "https://mirrar-medialibrary.s3.ap-south-1.amazonaws.com/tryon-uploads/03079649942-e1.jpg"
+      "public/images/02840709605-e1.jpg",
+      "public/images/02976241080-e1.jpg",
+      "public/images/03079649942-e1.jpg"
     ]
   };
 
@@ -53,10 +53,10 @@ const Index = () => {
     }
 
     setIsProcessing(true);
-    
+
     try {
       const result = await TryOnService.processTryOn(image, clothImage, category);
-      
+
       if (result.outputUrl && result.outputBlob) {
         setOutputImage(result.outputUrl);
         setOutputImageBlob(result.outputBlob);
@@ -108,7 +108,7 @@ const Index = () => {
           if (file) setImage(URL.createObjectURL(file));
         }}
       />
-      
+
       <input
         ref={clothRef}
         type="file"
@@ -146,7 +146,7 @@ const Index = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <UploadBox 
+          <UploadBox
             title="Upload Model Image"
             image={image}
             onUploadClick={() => imageRef.current?.click()}
@@ -154,7 +154,7 @@ const Index = () => {
             className="bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 animate-fade-in"
           />
 
-          <UploadBox 
+          <UploadBox
             title="Upload Garment Image"
             image={clothImage}
             onUploadClick={() => clothRef.current?.click()}
@@ -162,7 +162,7 @@ const Index = () => {
             className="bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 flex-1 animate-fade-in [animation-delay:200ms]"
           />
 
-          <ResultPanel 
+          <ResultPanel
             isProcessing={isProcessing}
             outputImage={outputImage}
             className="bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 animate-fade-in [animation-delay:400ms]"
@@ -170,22 +170,22 @@ const Index = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <ImageGallery 
+          <ImageGallery
             title="Sample Models"
-            images={modelImages} 
-            onSelectImage={setImage} 
+            images={modelImages}
+            onSelectImage={setImage}
             className="animate-fade-in"
           />
 
-          <ImageGallery 
+          <ImageGallery
             title={`Sample ${category.charAt(0).toUpperCase() + category.slice(1)}`}
-            images={currentGarmentImages} 
+            images={currentGarmentImages}
             onSelectImage={setClothImage}
             className="animate-fade-in [animation-delay:200ms]"
           />
 
           <div className="flex flex-col space-y-4 justify-center animate-fade-in [animation-delay:400ms]">
-            <Button 
+            <Button
               onClick={outputImage ? handleReset : handleTryOn}
               disabled={(!image || !clothImage) || isProcessing}
               className="w-full py-6 text-lg font-medium transition-all duration-300 hover:scale-[1.02] bg-gradient-to-r from-violet-600 to-indigo-600"
@@ -206,7 +206,7 @@ const Index = () => {
               )}
             </Button>
 
-            <Button 
+            <Button
               onClick={handleDownload}
               disabled={!outputImageBlob}
               variant="secondary"
